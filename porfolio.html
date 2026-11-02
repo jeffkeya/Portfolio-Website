@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japheth Billy Odhiambo — Social Work & Software Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16213B;
+    --paper:#EDEAE3;
+    --paper-2:#E3DFD5;
+    --clay:#B96B3C;
+    --clay-soft:#E2B593;
+    --teal:#3F6E73;
+    --teal-soft:#A9CBCB;
+    --muted:#6B6A63;
+    --line:#CFCABC;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--clay-soft); color:var(--ink);}
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em; }
+  a{color:inherit;}
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--teal); outline-offset:3px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
+
+  /* NAV */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(237,234,227,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px; max-width:1080px; margin:0 auto;
+  }
+  .brand{ font-family:'Fraunces', serif; font-weight:600; font-size:18px; }
+  .navlinks{ display:flex; gap:28px; list-style:none; font-size:14px; }
+  .navlinks a{ text-decoration:none; color:var(--ink); position:relative; padding-bottom:3px; }
+  .navlinks a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:var(--clay); transition:width 0.25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .navtoggle{display:none;}
+
+  @media (max-width:720px){
+    .navlinks{
+      position:fixed; top:58px; left:0; right:0; background:var(--paper);
+      flex-direction:column; padding:20px 32px; gap:16px;
+      border-bottom:1px solid var(--line);
+      transform:translateY(-150%); transition:transform 0.3s ease;
+    }
+    .navlinks.open{transform:translateY(0);}
+    .navtoggle{ display:block; background:none; border:none; font-size:22px; cursor:pointer; color:var(--ink); }
+  }
+
+  /* HERO */
+  .hero{
+    min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+    padding-top:80px; position:relative;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--muted);
+    text-transform:uppercase; letter-spacing:0.12em; margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:''; width:8px; height:8px; border-radius:50%; background:var(--clay); }
+  .hero h1{ font-size:clamp(36px, 5.6vw, 62px); line-height:1.08; max-width:15ch; margin-bottom:28px; }
+  .hero h1 .accent-clay{color:var(--clay);}
+  .hero h1 .accent-teal{color:var(--teal);}
+  .hero p{ font-size:18px; max-width:54ch; color:#3c3b36; margin-bottom:36px; }
+  .hero-cta{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:2px;
+    font-size:14px; font-weight:500; text-decoration:none; border:1px solid var(--ink);
+    transition:all 0.2s ease;
+  }
+  .btn-solid{ background:var(--ink); color:var(--paper); }
+  .btn-solid:hover{background:var(--clay); border-color:var(--clay);}
+  .btn-outline:hover{background:var(--ink); color:var(--paper);}
+
+  .network{ position:absolute; right:0; top:50%; transform:translateY(-50%); width:min(420px, 40vw); opacity:0.9; }
+  @media (max-width:900px){ .network{display:none;} }
+  .network path{ stroke-dasharray:400; stroke-dashoffset:400; animation:draw 2.2s ease forwards; }
+  .network circle{ opacity:0; animation:fadein 0.6s ease forwards; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @keyframes fadein{ to{ opacity:1; } }
+
+  section{ padding:120px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{border-bottom:none;}
+  .section-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:56px; }
+  .section-num{ font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--muted); }
+  .section-head h2{ font-size:clamp(28px, 4vw, 38px); }
+
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.show{ opacity:1; transform:translateY(0); }
+
+  .about-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:start; }
+  @media (max-width:800px){ .about-grid{grid-template-columns:1fr;} }
+  .about-grid p{margin-bottom:18px; max-width:56ch;}
+  .about-facts{ display:flex; flex-direction:column; gap:22px; padding-left:28px; border-left:1px solid var(--line); }
+  .fact-label{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted);
+    text-transform:uppercase; letter-spacing:0.08em; margin-bottom:4px;
+  }
+  .fact-value{font-size:16px;}
+
+  .practices{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); }
+  @media (max-width:800px){ .practices{grid-template-columns:1fr;} }
+  .practice{ background:var(--paper); padding:44px; }
+  .practice-clay{border-top:3px solid var(--clay);}
+  .practice-teal{border-top:3px solid var(--teal);}
+  .practice .eyebrow-sm{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; text-transform:uppercase;
+    letter-spacing:0.1em; margin-bottom:14px;
+  }
+  .practice-clay .eyebrow-sm{color:var(--clay);}
+  .practice-teal .eyebrow-sm{color:var(--teal);}
+  .practice h3{font-size:24px; margin-bottom:16px;}
+  .practice ul{list-style:none; margin-top:22px; display:flex; flex-direction:column; gap:12px;}
+  .practice li{ font-size:15px; padding-left:18px; position:relative; color:#3c3b36; }
+  .practice li::before{ content:''; position:absolute; left:0; top:9px; width:6px; height:1px; background:var(--ink); }
+  .tag-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;}
+  .tag{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; padding:5px 10px; border:1px solid var(--line); color:var(--muted); }
+
+  .systems{ background:var(--ink); color:var(--paper); border-bottom:none; }
+  .systems .section-num, .systems .fact-label{color:var(--teal-soft);}
+  .systems h2{color:var(--paper);}
+  .systems-body{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  @media (max-width:800px){ .systems-body{grid-template-columns:1fr;} }
+  .systems-body p{ color:#D8D4C7; max-width:50ch; margin-bottom:16px; }
+  .diagram{ width:100%; height:auto; }
+  .diagram .n-people circle{fill:var(--clay);}
+  .diagram .n-code circle{fill:var(--teal-soft);}
+  .diagram line{stroke:#4A5A6E; stroke-width:1;}
+  .diagram .pulse{ animation:pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:0.55;} 50%{opacity:1;} }
+
+  .timeline{ display:flex; flex-direction:column; gap:0; }
+  .tl-item{ display:grid; grid-template-columns:140px 1fr; gap:32px; padding:32px 0; border-top:1px solid var(--line); }
+  .tl-item:last-child{border-bottom:1px solid var(--line);}
+  @media (max-width:640px){ .tl-item{grid-template-columns:1fr;} }
+  .tl-date{ font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--muted); padding-top:2px; }
+  .tl-content h3{font-size:19px; margin-bottom:6px;}
+  .tl-org{ font-size:14px; color:var(--muted); margin-bottom:10px; }
+  .tl-content p{max-width:60ch; color:#3c3b36; font-size:15px;}
+  .tl-badge{
+    display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:11px; padding:3px 8px;
+    margin-top:12px; margin-right:6px; border:1px solid var(--line); color:var(--muted);
+  }
+
+  .skills-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  @media (max-width:700px){ .skills-grid{grid-template-columns:1fr;} }
+  .skill-col h3{
+    font-size:14px; text-transform:uppercase; letter-spacing:0.08em;
+    font-family:'IBM Plex Mono', monospace; font-weight:500; margin-bottom:20px;
+  }
+  .skill-col-clay h3{color:var(--clay);}
+  .skill-col-teal h3{color:var(--teal);}
+  .skill-list{list-style:none; display:flex; flex-direction:column; gap:14px;}
+  .skill-list li{
+    display:flex; justify-content:space-between; font-size:15px; padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .skill-list span{color:var(--muted); font-family:'IBM Plex Mono', monospace; font-size:13px;}
+
+  footer{ padding:100px 0 60px; }
+  .contact-inner{ display:flex; flex-direction:column; gap:28px; }
+  footer h2{font-size:clamp(30px,5vw,46px); max-width:18ch;}
+  .contact-links{ display:flex; flex-wrap:wrap; gap:28px; margin-top:8px; }
+  .contact-links a{
+    text-decoration:none; font-size:15px; border-bottom:1px solid var(--ink);
+    padding-bottom:2px; transition:opacity 0.2s ease;
+  }
+  .contact-links a:hover{color:var(--clay); border-color:var(--clay);}
+  .foot-note{ margin-top:60px; font-size:13px; color:var(--muted); font-family:'IBM Plex Mono', monospace; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand">Japheth Billy</div>
+    <button class="navtoggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+    <ul class="navlinks" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#practices">Practice</a></li>
+      <li><a href="#systems">Approach</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <div class="eyebrow">Open to opportunities and ready to work with communities across the globe.Addressing community based issues through technology and digital systems.</div>
+  <h1>People-centred problem-solving —<br><span class="accent-clay">in practice</span>, and <span class="accent-teal">in code.</span></h1>
+  <p>I'm Japheth Billy, a Social Work student at Maasai Mara University and a certified Software Engineer through the Power Learn Project Academy. I bring case management, community engagement, and analytical thinking together with Python, databases, and web development — ready to contribute to fast-paced, multidisciplinary environments in development, health, or community settings.</p>
+  <div class="hero-cta">
+    <a href="#practices" class="btn btn-solid">See my background</a>
+    <a href="#contact" class="btn btn-outline">Get in touch</a>
+  </div>
+
+  <svg class="network" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M60 90 L180 60 L320 130 L260 250 L120 300 L60 90 L320 130" stroke="#B96B3C" stroke-width="1.4"/>
+    <path d="M180 60 L120 300 M260 250 L60 90" stroke="#3F6E73" stroke-width="1.4"/>
+    <circle cx="60" cy="90" r="6" fill="#B96B3C" style="animation-delay:0.4s"/>
+    <circle cx="180" cy="60" r="5" fill="#3F6E73" style="animation-delay:0.8s"/>
+    <circle cx="320" cy="130" r="7" fill="#B96B3C" style="animation-delay:1.2s"/>
+    <circle cx="260" cy="250" r="5" fill="#3F6E73" style="animation-delay:1.6s"/>
+    <circle cx="120" cy="300" r="6" fill="#B96B3C" style="animation-delay:2s"/>
+  </svg>
+</section>
+
+<section id="about" class="wrap">
+  <div class="section-head reveal">
+    <span class="section-num">01</span>
+    <h2>About</h2>
+  </div>
+  <div class="about-grid reveal">
+    <div>
+      <p>I'm a self-motivated, results-driven graduate trainee with a background in Social Work and certified training in Software Engineering and start-up development. My studies at Maasai Mara University grounded me in case management, counselling, research, and community development while certified training at the Power Learn Project Academy (PLP) gave me practical skill in Python, databases, and web development.</p>
+      <p>Through two field attachments at Narok County Referral Hospital's Mental Health Department and with Anglican Development Services South Rift (ADS South Rift)  I've supported psychosocial care, case management, community sensitisation, and child protection work, including participation in Ward and Sub-County Child Advisory Committee (CAC) meetings.</p>
+      <p>I'm eager to bring this blend of people-centred problem-solving, communication, and digital skill to a structured programme such as KCB's Management Trainee Program, or to organisations in community development and health.</p>
+    </div>
+    <div class="about-facts">
+      <div>
+        <div class="fact-label">Based in</div>
+        <div class="fact-value">Narok County, Kenya</div>
+      </div>
+      <div>
+        <div class="fact-label">Education</div>
+        <div class="fact-value">BA Social Work, Maasai Mara University (2023–Expected 2027)</div>
+      </div>
+      <div>
+        <div class="fact-label">Certified Training</div>
+        <div class="fact-value">Software Engineering & Start-up Development — Power Learn Project Academy</div>
+      </div>
+      <div>
+        <div class="fact-label">Languages</div>
+        <div class="fact-value">English and Swahili</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="practices" class="wrap">
+  <div class="section-head reveal">
+    <span class="section-num">02</span>
+    <h2>Two foundations, one practice</h2>
+  </div>
+  <div class="practices reveal">
+    <div class="practice practice-clay">
+      <div class="eyebrow-sm">Social Work</div>
+      <h3>Case practice & community development</h3>
+      <p>Field-based experience supporting individuals, families, and communities through case management, counselling support, and protection programming.</p>
+      <ul>
+        <li>Case management and counselling support</li>
+        <li>Community mobilisation and sensitisation</li>
+        <li>Child protection, including Ward & Sub-County CAC participation</li>
+        <li>Beneficiary follow-up, documentation, and confidential records management</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">Narok County Referral Hospital</span>
+        <span class="tag">ADS South Rift</span>
+      </div>
+    </div>
+    <div class="practice practice-teal">
+      <div class="eyebrow-sm">Software Engineering</div>
+      <h3>Digital & technical skill</h3>
+      <p>Certified training in software engineering and start-up development, applied alongside strong office and reporting proficiency.</p>
+      <ul>
+        <li>Python programming</li>
+        <li>HTML, CSS & JavaScript fundamentals</li>
+        <li>Databases and data handling</li>
+        <li>Microsoft Office: Excel, Word, PowerPoint, Access</li>
+      </ul>
+      <div class="tag-row">
+        <span class="tag">Python</span>
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Databases</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="systems" class="systems">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">03</span>
+      <h2>Where the two meet</h2>
+    </div>
+    <div class="systems-body reveal">
+      <div>
+        <p>Community protection work and software both come down to the same thing: building something reliable enough that people can trust it. A referral pathway and a database schema are both, at heart, systems for making sure nothing important falls through the cracks.</p>
+        <p>My field attachments taught me to work carefully with confidential information, coordinate across stakeholders, and follow through on every case. My technical training taught me the same discipline — attention to detail, accuracy, and accountability — applied to code and data instead of case files.</p>
+        <p>That's the strength I bring to any fast-paced, multidisciplinary environment: analytical thinking paired with genuine care for the person the work is meant to serve.</p>
+      </div>
+      <svg class="diagram" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g>
+          <line x1="60" y1="60" x2="180" y2="40"/>
+          <line x1="180" y1="40" x2="300" y2="70"/>
+          <line x1="60" y1="60" x2="120" y2="160"/>
+          <line x1="180" y1="40" x2="220" y2="150"/>
+          <line x1="300" y1="70" x2="340" y2="180"/>
+          <line x1="120" y1="160" x2="220" y2="150"/>
+          <line x1="220" y1="150" x2="340" y2="180"/>
+          <line x1="120" y1="160" x2="200" y2="220"/>
+          <line x1="220" y1="150" x2="200" y2="220"/>
+        </g>
+        <g class="n-people">
+          <circle class="pulse" cx="60" cy="60" r="7" style="animation-delay:0s"/>
+          <circle class="pulse" cx="120" cy="160" r="6" style="animation-delay:0.4s"/>
+          <circle class="pulse" cx="200" cy="220" r="6" style="animation-delay:0.8s"/>
+        </g>
+        <g class="n-code">
+          <circle class="pulse" cx="180" cy="40" r="6" style="animation-delay:0.2s"/>
+          <circle class="pulse" cx="300" cy="70" r="7" style="animation-delay:0.6s"/>
+          <circle class="pulse" cx="220" cy="150" r="6" style="animation-delay:1s"/>
+          <circle class="pulse" cx="340" cy="180" r="6" style="animation-delay:1.4s"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="wrap">
+  <div class="section-head reveal">
+    <span class="section-num">04</span>
+    <h2>Experience & Education</h2>
+  </div>
+  <div class="timeline reveal">
+    <div class="tl-item">
+      <div class="tl-date">2026</div>
+      <div class="tl-content">
+        <h3>Field Attachment / Programme Support Intern</h3>
+        <div class="tl-org">Anglican Development Services South Rift (ADS South Rift) · Narok County</div>
+        <p>Supported community development and child protection activities. Participated in Ward and Sub-County Child Advisory Committee (CAC) meetings on child protection planning and referral pathways. Assisted with community sensitisation on child rights, gender equality, GBV and FGM prevention, and adolescent empowerment. Contributed to beneficiary follow-up, case documentation, and confidential programme records management.</p>
+        <span class="tl-badge">Community Development</span>
+        <span class="tl-badge">Child Protection</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2025</div>
+      <div class="tl-content">
+        <h3>Social Work Field Attachment Student</h3>
+        <div class="tl-org">Narok County Referral Hospital · Mental Health Department</div>
+        <p>Supported psychosocial and mental-health-related interventions through counselling support, client engagement, and referral assistance. Assisted with case management, client follow-up, and social work documentation. Worked with adolescents, young mothers, and vulnerable clients on GBV, sexual abuse, and sexual harassment awareness.</p>
+        <span class="tl-badge">Mental Health</span>
+        <span class="tl-badge">Case Management</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2025</div>
+      <div class="tl-content">
+        <h3>Software Engineering & Start-up Development</h3>
+        <div class="tl-org">Power Learn Project Academy (PLP)</div>
+        <p>Certified training in Python programming, front-end development, databases, problem-solving, and digital project development.</p>
+        <span class="tl-badge">Software Engineering</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2023</div>
+      <div class="tl-content">
+        <h3>Certificate in Computer Studies</h3>
+        <div class="tl-org">Matibabu Foundation College</div>
+        <p>Covered the Microsoft Office Suite, computer applications, document preparation, and basic ICT operations.</p>
+        <span class="tl-badge">Digital Literacy</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2023 – Expected 2027</div>
+      <div class="tl-content">
+        <h3>Bachelor of Arts in Social Work</h3>
+        <div class="tl-org">Maasai Mara University</div>
+        <p>Coursework in case management, counselling, research, social policy, communication, community development, and programme implementation.</p>
+        <span class="tl-badge">Social Work</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2022</div>
+      <div class="tl-content">
+        <h3>KCSE, Grade C+</h3>
+        <div class="tl-org">Ramba Boys Secondary School</div>
+        <p>Awarded the Certificate of Excellence in Communication and Public Speaking.</p>
+        <span class="tl-badge">Foundation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="wrap">
+  <div class="section-head reveal">
+    <span class="section-num">05</span>
+    <h2>Skills & tools</h2>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-col skill-col-clay">
+      <h3>Social Work</h3>
+      <ul class="skill-list">
+        <li>Case management <span>Field-tested</span></li>
+        <li>Counselling support <span>Field-tested</span></li>
+        <li>Community mobilisation <span>Field-tested</span></li>
+        <li>Child protection & CAC engagement <span>Field-tested</span></li>
+        <li>Report writing & documentation <span>Field-tested</span></li>
+      </ul>
+    </div>
+    <div class="skill-col skill-col-teal">
+      <h3>Software Engineering</h3>
+      <ul class="skill-list">
+        <li>Python <span>Certified — PLP</span></li>
+        <li>HTML / CSS / JavaScript <span>Certified — PLP</span></li>
+        <li>Database Managem <span>Certified — PLP</span></li>
+        <li>Microsoft Office (Excel, Word, PowerPoint, Access) <span>Certified</span></li>
+        <li>Data collection & handling <span>Field-tested</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer id="contact" class="wrap">
+  <div class="contact-inner reveal">
+    <h2>Let's talk — social work, software, or both.</h2>
+    <div class="contact-links">
+      <a href="mailto:billyjapheth85@gmail.com">billyjapheth85@gmail.com</a>
+      <a href="tel:+254742043021">+254 742 043 021</a>
+    </div>
+    <div class="foot-note">© <span id="year"></span> Japheth Billy — Social Work · Software Engineering</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
